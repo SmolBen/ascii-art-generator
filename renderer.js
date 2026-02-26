@@ -14,6 +14,8 @@ const contrastVal = document.getElementById('contrastVal');
 const resolutionInput = document.getElementById('resolution');
 const resolutionVal = document.getElementById('resolutionVal');
 
+const preview = document.getElementById('preview');
+
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -26,7 +28,8 @@ imageInput.addEventListener('change', (e) => {
             canvas.width = img.width;
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
-            console.log(`Image loaded: ${img.width}`)
+            preview.src = event.target.result;
+            console.log(`Image loaded: ${img.width}`);
 
             updateAscii();
         };
