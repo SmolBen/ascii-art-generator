@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ASCII Art Generator</title>
+    </head>
+    <body>
+        <h1> ASCII Art Generator</h1>
+        <input type="file" id ="imageInput" accept="image/*">
+
+        <div id="controls">
+            <label>Brightness: <input type="range" id="brightness" min="-100" max="100" value="0"> <span id="brightnessVal">0</span></label>
+            <label>Contrast: <input type = "range" id="contrast" min="-100" max="100" value="0"> <span id="contrastVal">0</span></label>
+        </div>
+        <canvas id ="canvas"></canvas>
+        <pre id="asciiOutput"></pre>
+        <script src="renderer.js"></script>
+    </body>
+</html>
