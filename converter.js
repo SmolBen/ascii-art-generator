@@ -8,12 +8,12 @@ function imageToAscii(canvas, blockSize = 8, brightness = 0, contrast = 0) {
     let asciiArt = '';
 
     for (let y = 0; y < canvas.height; y += blockSize) {
-        for (let x = 0; x < canvas.width; x += blockSize / 2) {
+        for (let x = 0; x < canvas.width; x += Math.ceil(blockSize / 2)) {
             let totalBrightness = 0;
             let count = 0;
 
             for (let dy = 0; dy < blockSize && y + dy < canvas.height; dy++) {
-                for (let dx = 0; dx < blockSize && x + dx < canvas.width; dx++) {
+                for (let dx = 0; dx < Math.ceil(blockSize / 2) && x + dx < canvas.width; dx++) {
                     const pixelIndex = ((y+dy) * canvas.width + (x+dx)) *4;
                     const r = pixels[pixelIndex];
                     const g = pixels[pixelIndex +1];
