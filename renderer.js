@@ -11,6 +11,9 @@ const contrastInput = document.getElementById('contrast');
 const brightnessVal = document.getElementById('brightnessVal');
 const contrastVal = document.getElementById('contrastVal');
 
+const resolutionInput = document.getElementById('resolution');
+const resolutionVal = document.getElementById('resolutionVal');
+
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -34,7 +37,7 @@ imageInput.addEventListener('change', (e) => {
 
 function updateAscii() {
     if (canvas.width === 0) return;
-    const ascii = imageToAscii(canvas, 8, parseInt(brightnessInput.value), parseInt(contrastInput.value));
+    const ascii = imageToAscii(canvas, parseInt(resolutionInput.value), parseInt(brightnessInput.value), parseInt(contrastInput.value));
     asciiOutput.textContent = ascii;
 }
 
@@ -46,5 +49,10 @@ brightnessInput.addEventListener('input', () => {
 
 contrastInput.addEventListener('input', () => {
     contrastVal.textContent = contrastInput.value;
+    updateAscii();
+});
+
+resolutionInput.addEventListener('input', () => {
+    resolutionVal.textContent = resolutionInput.value;
     updateAscii();
 });
