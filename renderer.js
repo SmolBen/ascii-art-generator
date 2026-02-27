@@ -14,6 +14,9 @@ const contrastVal = document.getElementById('contrastVal');
 const resolutionInput = document.getElementById('resolution');
 const resolutionVal = document.getElementById('resolutionVal');
 
+const copyBtn = document.getElementById('copyBtn');
+const saveBtn = document.getElementById('saveBtn');
+
 const preview = document.getElementById('preview');
 
 imageInput.addEventListener('change', (e) => {
@@ -59,3 +62,20 @@ resolutionInput.addEventListener('input', () => {
     resolutionVal.textContent = resolutionInput.value;
     updateAscii();
 });
+
+copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(asciiOutput.textContent).then(() => {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy to Clipboard', 2000);
+    });
+});
+
+saveBtn.addEventListener('click', () => {
+    const blob = new Blob([asciiOutput.textContent], { type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ascii-art.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+})
