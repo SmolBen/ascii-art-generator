@@ -50,6 +50,22 @@ html, body {
     gap: 6px;
 }
 
+#style-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#style-controls input[type="color"] {
+    width: 30px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
 #canvas-area {
     flex: 1;
     overflow: auto;
