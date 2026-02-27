@@ -19,6 +19,9 @@ const saveBtn = document.getElementById('saveBtn');
 
 const preview = document.getElementById('preview');
 
+const charRamp = document.getElementById('charRamp');
+const resetRamp = document.getElementById('resetRamp');
+
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -43,7 +46,7 @@ imageInput.addEventListener('change', (e) => {
 
 function updateAscii() {
     if (canvas.width === 0) return;
-    const ascii = imageToAscii(canvas, parseInt(resolutionInput.value), parseInt(brightnessInput.value), parseInt(contrastInput.value));
+    const ascii = imageToAscii(canvas, parseInt(resolutionInput.value), parseInt(brightnessInput.value), parseInt(contrastInput.value), charRamp.value);
     asciiOutput.textContent = ascii;
 }
 
@@ -78,4 +81,13 @@ saveBtn.addEventListener('click', () => {
     a.download = 'ascii-art.txt';
     a.click();
     URL.revokeObjectURL(url);
+})
+
+charRamp.addEventListener('input', () => {
+    updateAscii();
+})
+
+resetRamp.addEventListener('click', () => {
+    charRamp.value = '@%#*+=. ';
+    updateAscii();
 })

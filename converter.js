@@ -1,6 +1,4 @@
-const ASCII_CHARS = '@%#*+=-:. ';
-
-function imageToAscii(canvas, blockSize = 8, brightness = 0, contrast = 0) {
+function imageToAscii(canvas, blockSize = 8, brightness = 0, contrast = 0, chars = '@%#*+=:. ') {
     const ctx = canvas.getContext('2d');
     const imageData = ctx.getImageData(0,0, canvas.width, canvas.height);
     const pixels = imageData.data;
@@ -28,8 +26,8 @@ function imageToAscii(canvas, blockSize = 8, brightness = 0, contrast = 0) {
                 }
             }
             const avgBrightness = totalBrightness / count;
-            const charIndex = Math.floor((avgBrightness / 255) * (ASCII_CHARS.length - 1));
-            asciiArt += ASCII_CHARS[charIndex];
+            const charIndex = Math.floor((avgBrightness / 255) * (chars.length - 1));
+            asciiArt += chars[charIndex];
             }
             asciiArt += '\n';
         }
