@@ -19,3 +19,15 @@ canvas {
     max-height: 150px;
     border: 1px solid #ccc;
 }
+
+#asciiOutput {
+    cursor: crosshair;
+    user-select: none;
+}
+
+#selectionOverlay {
+    position: absolute;
+    background-color: rgba(0, 120, 255, 0.3);
+    pointer-events: none;
+    display: none;
+}

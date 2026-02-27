@@ -44,12 +44,137 @@ imageInput.addEventListener('change', (e) => {
     reader.readAsDataURL(file);
 });
 
+let asciiLines = [];
+let undoStack = [];
+let redoStack = [];
+let selecting = false;
+let selStart = null;
+let selEnd = null;
+let charWidth = 0;
+let lineHeight = 0;
+
+const selectionOverlay = document.createElement('div');
+selectionOverlay.id = 'selectionOverlay';
+asciiOutput.parentElement.style.position = 'relative';
+asciiOutput.parentElement.appendChild(selectionOverlay);
+
+function measureCharSize() {
+    const style = getComputedStyle(asciiOutput);
+    const span = document.createElement('span');
+    span.style.font = style.font;
+    span.style.visibility = 'hidden';
+    span.style.position = 'absolute';
+    span.style.whiteSpace = 'pre';
+    span.textContent = 'M';
+    document.body.appendChild(span);
+    charWidth = span.getBoundingClientRect().width;
+    document.body.removeChild(span);
+    lineHeight = parseFloat(style.lineHeight) || parseFloat(style.fontSize) * 1.2;
+}
+
 function updateAscii() {
     if (canvas.width === 0) return;
     const ascii = imageToAscii(canvas, parseInt(resolutionInput.value), parseInt(brightnessInput.value), parseInt(contrastInput.value), charRamp.value);
-    asciiOutput.textContent = ascii;
+    asciiLines = ascii.split('\n');
+    selStart = null;
+    selEnd = null;
+    asciiOutput.textContent = asciiLines.join('\n');
+    updateOverlay();
+    measureCharSize();
 }
 
+function getCharPosition(e) {
+    const rect = asciiOutput.getBoundingClientRect();
+    const col = Math.floor((e.clientX - rect.left) / charWidth);
+    const row = Math.floor((e.clientY - rect.top + asciiOutput.scrollTop) / lineHeight);
+    return { row, col };
+}
+
+function updateOverlay() {
+    if (!selStart || !selEnd) {
+        selectionOverlay.style.display = 'none';
+        return;
+    }
+
+    const minRow = Math.min(selStart.row, selEnd.row);
+    const maxRow = Math.max(selStart.row, selEnd.row);
+    const minCol = Math.min(selStart.col, selEnd.col);
+    const maxCol = Math.max(selStart.col, selEnd.col);
+
+    const rect = asciiOutput.getBoundingClientRect();
+    const parentRect = asciiOutput.parentElement.getBoundingClientRect();
+
+    selectionOverlay.style.display = 'block';
+    selectionOverlay.style.left = (rect.left - parentRect.left + minCol * charWidth) + 'px';
+    selectionOverlay.style.top = (rect.top - parentRect.top + minRow * lineHeight - asciiOutput.scrollTop) + 'px';
+    selectionOverlay.style.width = ((maxCol - minCol + 1) * charWidth) + 'px';
+    selectionOverlay.style.height = ((maxRow - minRow + 1) * lineHeight) + 'px';
+}
+
+asciiOutput.addEventListener('mousedown', (e) => {
+    if (charWidth === 0) measureCharSize();
+    const pos = getCharPosition(e);
+    if (!pos) return;
+    selecting = true;
+    selStart = pos;
+    selEnd = pos;
+    updateOverlay();
+});
+
+asciiOutput.addEventListener('mousemove', (e) => {
+    if (!selecting) return;
+    selEnd = getCharPosition(e);
+    updateOverlay();
+});
+
+asciiOutput.addEventListener('mouseup', () => {
+    selecting = false;
+});
+
+document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Delete' || e.key === 'Backspace') && selStart && selEnd) {
+        undoStack.push(asciiLines.slice());
+        redoStack = [];
+
+        const minRow = Math.min(selStart.row, selEnd.row);
+        const maxRow = Math.max(selStart.row, selEnd.row);
+        const minCol = Math.min(selStart.col, selEnd.col);
+        const maxCol = Math.max(selStart.col, selEnd.col);
+
+        for (let row = minRow; row <= maxRow; row++) {
+            if (row < asciiLines.length) {
+                const line = asciiLines[row];
+                const before = line.substring(0, minCol);
+                const after = line.substring(maxCol + 1);
+                const spaces = ' '.repeat(maxCol - minCol + 1);
+                asciiLines[row] = before + spaces + after;
+            }
+        }
+
+        selStart = null;
+        selEnd = null;
+        asciiOutput.textContent = asciiLines.join('\n');
+        updateOverlay();
+    }
+
+    if (e.key === 'z' && e.ctrlKey && undoStack.length > 0) {
+        redoStack.push(asciiLines.slice());
+        asciiLines = undoStack.pop();
+        selStart = null;
+        selEnd = null;
+        asciiOutput.textContent = asciiLines.join('\n');
+        updateOverlay();
+    }
+
+    if (e.key === 'y' && e.ctrlKey && redoStack.length > 0) {
+        undoStack.push(asciiLines.slice());
+        asciiLines = redoStack.pop();
+        selStart = null;
+        selEnd = null;
+        asciiOutput.textContent = asciiLines.join('\n');
+        updateOverlay();
+    }
+});
 
 brightnessInput.addEventListener('input', () => {
     brightnessVal.textContent = brightnessInput.value;
