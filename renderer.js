@@ -83,7 +83,8 @@ function measureCharSize() {
 
 function updateAscii() {
     if (canvas.width === 0) return;
-    const ascii = imageToAscii(canvas, parseInt(resolutionInput.value), parseInt(brightnessInput.value), parseInt(contrastInput.value), charRamp.value);
+    const blockSize = 51 - parseInt(resolutionInput.value);
+    const ascii = imageToAscii(canvas, blockSize, parseInt(brightnessInput.value), parseInt(contrastInput.value), charRamp.value);
     asciiLines = ascii.split('\n');
     selStart = null;
     selEnd = null;
