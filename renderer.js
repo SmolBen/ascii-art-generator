@@ -216,6 +216,46 @@ saveBtn.addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
+const saveImgBtn = document.getElementById('saveImgBtn');
+saveImgBtn.addEventListener('click', () => {
+    const text = asciiOutput.textContent;
+    if (!text) return;
+    const lines = text.split('\n');
+
+    const fontSize = 10;
+    const lineH = fontSize * 1.2;
+    const maxCols = Math.max(...lines.map(l => l.length));
+    const width = Math.ceil(maxCols * fontSize * 0.6) + 20;
+    const height = Math.ceil(lines.length * lineH) + 20;
+
+    const intensity = parseInt(glowIntensityInput.value);
+    let filterDef = '';
+    let filterAttr = '';
+    if (intensity > 0) {
+        filterDef = `<defs><filter id="glow"><feGaussianBlur stdDeviation="${intensity}" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+        filterAttr = ' filter="url(#glow)"';
+    }
+
+    const escaped = lines.map((line, i) => {
+        const safe = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<tspan x="10" dy="${i === 0 ? fontSize : lineH}">${safe}</tspan>`;
+    }).join('');
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+${filterDef}
+<rect width="100%" height="100%" fill="${bgColorInput.value}"/>
+<text xml:space="preserve" font-family="monospace" font-size="${fontSize}" fill="${textColorInput.value}"${filterAttr}>${escaped}</text>
+</svg>`;
+
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ascii-art.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
 charRamp.addEventListener('input', () => {
     updateAscii();
 });
