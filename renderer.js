@@ -22,6 +22,8 @@ const preview = document.getElementById('preview');
 const charRamp = document.getElementById('charRamp');
 const resetRamp = document.getElementById('resetRamp');
 
+const themeToggle = document.getElementById('themeToggle');
+
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -206,13 +208,18 @@ saveBtn.addEventListener('click', () => {
     a.download = 'ascii-art.txt';
     a.click();
     URL.revokeObjectURL(url);
-})
+});
 
 charRamp.addEventListener('input', () => {
     updateAscii();
-})
+});
 
 resetRamp.addEventListener('click', () => {
     charRamp.value = '@%#*+=. ';
     updateAscii();
-})
+});
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    themeToggle.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+});
