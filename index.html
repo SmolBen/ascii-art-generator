@@ -8,9 +8,9 @@
         <div id="app">
             <div id="sidebar">
                 <h1>ASCII Art Generator</h1>
-                <button id="themeToggle">Dark Mode</button>
                 <img id="preview" src="">
-                <input type="file" id="imageInput" accept="image/*">
+                <button id="loadBtn">Load Image</button>
+                <input type="file" id="imageInput" accept="image/*" style="display:none;">
                 <div id="controls">
                     <label>Brightness: <input type="range" id="brightness" min="-100" max="100" value="0"> <span id="brightnessVal">0</span></label>
                     <label>Contrast: <input type="range" id="contrast" min="-100" max="100" value="0"> <span id="contrastVal">0</span></label>
@@ -22,10 +22,10 @@
                     </div>
                 </div>
                 <div id="style-controls">
-                    <label>Text Color: <input type="color" id="textColor" value="#000000"></label>
-                    <label>Glow Color: <input type="color" id="glowColor" value="#00ffff"></label>
-                    <label>Glow Intensity: <input type="range" id="glowIntensity" min="0" max="20" value="0"> <span id="glowVal">0</span></label>
-                    <label>Background: <input type="color" id="bgColor" value="#ffffff"></label>
+                    <label>Text Color: <input type="color" id="textColor" value="#33ff33"></label>
+                    <label>Glow Color: <input type="color" id="glowColor" value="#33ff33"></label>
+                    <label>Glow Intensity: <input type="range" id="glowIntensity" min="0" max="20" value="3"> <span id="glowVal">3</span></label>
+                    <label>Background: <input type="color" id="bgColor" value="#0a0a0a"></label>
                 </div>
                 <div id="export">
                     <button id="copyBtn">Copy to Clipboard</button>

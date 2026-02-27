@@ -22,13 +22,14 @@ const preview = document.getElementById('preview');
 const charRamp = document.getElementById('charRamp');
 const resetRamp = document.getElementById('resetRamp');
 
-const themeToggle = document.getElementById('themeToggle');
-
 const textColorInput = document.getElementById('textColor');
 const glowColorInput = document.getElementById('glowColor');
 const glowIntensityInput = document.getElementById('glowIntensity');
 const glowVal = document.getElementById('glowVal');
 const bgColorInput = document.getElementById('bgColor');
+const loadBtn = document.getElementById('loadBtn');
+
+loadBtn.addEventListener('click', () => imageInput.click());
 
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -265,19 +266,6 @@ resetRamp.addEventListener('click', () => {
     updateAscii();
 });
 
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    themeToggle.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
-    if (document.body.classList.contains('dark')) {
-        textColorInput.value = '#d4d4d4';
-        bgColorInput.value = '#1e1e1e';
-    } else {
-        textColorInput.value = '#000000';
-        bgColorInput.value = '#ffffff';
-    }
-    applyTextStyle();
-});
-
 function applyTextStyle() {
     asciiOutput.style.color = textColorInput.value;
     asciiOutput.parentElement.style.backgroundColor = bgColorInput.value;
@@ -296,3 +284,5 @@ glowIntensityInput.addEventListener('input', () => {
     glowVal.textContent = glowIntensityInput.value;
     applyTextStyle();
 });
+
+applyTextStyle();

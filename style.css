@@ -1,6 +1,9 @@
 html, body {
     margin: 0;
     height: 100vh;
+    background-color: #0a0a0a;
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #app {
@@ -11,7 +14,8 @@ html, body {
 #sidebar {
     width: 180px;
     padding: 10px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #1a3a1a;
+    background-color: #0d0d0d;
     overflow-y: auto;
     font-size: 13px;
     display: flex;
@@ -22,26 +26,33 @@ html, body {
 #sidebar h1 {
     font-size: 16px;
     margin: 0;
+    color: #33ff33;
 }
 
 #sidebar label {
     display: block;
     margin: 0;
+    color: #33ff33;
 }
 
 #sidebar input[type="range"] {
     width: 100%;
     margin: 2px 0;
+    accent-color: #33ff33;
 }
 
 #sidebar input[type="text"] {
     width: 100%;
     box-sizing: border-box;
+    background-color: #111;
+    color: #33ff33;
+    border: 1px solid #1a3a1a;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #sidebar span {
     font-size: 12px;
-    color: #888;
+    color: #1a8a1a;
 }
 
 #controls {
@@ -59,23 +70,25 @@ html, body {
 #style-controls input[type="color"] {
     width: 30px;
     height: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #1a3a1a;
     border-radius: 3px;
     padding: 0;
     cursor: pointer;
     vertical-align: middle;
+    background-color: #111;
 }
 
 #canvas-area {
     flex: 1;
     overflow: auto;
     position: relative;
+    background-color: #0a0a0a;
 }
 
 #preview {
     max-width: 100%;
     max-height: 120px;
-    border: 1px solid #ccc;
+    border: 1px solid #1a3a1a;
     object-fit: contain;
 }
 
@@ -90,6 +103,7 @@ html, body {
     cursor: crosshair;
     user-select: none;
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 canvas {
@@ -98,53 +112,47 @@ canvas {
 
 #selectionOverlay {
     position: absolute;
-    background-color: rgba(0, 120, 255, 0.3);
+    background-color: rgba(51, 255, 51, 0.15);
     pointer-events: none;
     display: none;
 }
 
-
 button {
     padding: 6px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #1a3a1a;
     border-radius: 4px;
-    background-color: #f0f0f0;
+    background-color: #111;
+    color: #33ff33;
     cursor: pointer;
     font-size: 13px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-
-body.dark {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
+button:hover {
+    background-color: #1a2a1a;
+    border-color: #33ff33;
 }
 
-body.dark #sidebar {
-    background-color: #252526;
-    border-right-color: #3e3e3e;
+input[type="file"] {
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
 }
 
-body.dark #canvas-area {
-    background-color: #1e1e1e;
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
-body.dark #preview {
-    border-color: #3e3e3e;
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
 }
 
-body.dark button {
-    background-color: #3c3c3c;
-    color: #d4d4d4;
-    border: 1px solid #555;
-    border-radius: 4px;
+::-webkit-scrollbar-thumb {
+    background: #1a3a1a;
+    border-radius: 3px;
 }
 
-body.dark button:hover {
-    background-color: #505050;
-}
-
-body.dark input[type="text"] {
-    background-color: #3c3c3c;
-    color: #d4d4d4;
-    border: 1px solid #3e3e3e;
+::-webkit-scrollbar-thumb:hover {
+    background: #33ff33;
 }
