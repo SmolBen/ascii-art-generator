@@ -4,13 +4,36 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:web": "node build-web.js"
+  },
+  "build": {
+    "appId": "com.asciiart.generator",
+    "productName": "ASCII Art Generator",
+    "files": [
+      "main.js",
+      "renderer.js",
+      "converter.js",
+      "index.html",
+      "style.css"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "electron": "^40.6.1"
+    "electron": "^40.6.1",
+    "electron-builder": "^26.8.1"
   }
 }

@@ -34,4 +34,4 @@ function imageToAscii(canvas, blockSize = 8, brightness = 0, contrast = 0, chars
         return asciiArt;
     }
 
-module.exports = { imageToAscii };
+if (typeof module !== 'undefined') module.exports = { imageToAscii };

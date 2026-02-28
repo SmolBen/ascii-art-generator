@@ -1,4 +1,3 @@
-const { imageToAscii } = require('./converter');
 const imageInput = document.getElementById('imageInput');
 const canvas = document.getElementById('canvas');
 
