@@ -156,3 +156,42 @@ input[type="file"] {
 ::-webkit-scrollbar-thumb:hover {
     background: #33ff33;
 }
+
+@media (max-width: 600px) {
+    #app {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    #sidebar {
+        width: auto;
+        border-right: none;
+        border-bottom: 1px solid #1a3a1a;
+        max-height: none;
+        overflow-y: visible;
+        padding: 12px;
+    }
+
+    #sidebar h1 {
+        font-size: 14px;
+    }
+
+    #preview {
+        max-height: 80px;
+    }
+
+    #export {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #canvas-area {
+        flex: 1;
+        min-height: 50vh;
+    }
+
+    #asciiOutput {
+        font-size: 6px;
+    }
+}

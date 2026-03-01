@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node build-web.js)"
+      "Bash(node build-web.js)",
+      "Bash(git commit:*)"
     ]
   }
 }
